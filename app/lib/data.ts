@@ -190,7 +190,7 @@ export async function fetchCustomerById(id?: string) {
   }
 
   try {
-    const [customer] = await sql<CustomerField[]>`
+    const [customer] = await sql<CustomerEdit[]>`
       SELECT id, name, email, image_url FROM customers WHERE id = ${id}
     `;
 

@@ -4,13 +4,9 @@ import Link from 'next/link';
 import { useActionState } from 'react';
 import { updateCustomer, State } from '@/app/lib/actions';
 import { Button } from '@/app/ui/button';
+import {CustomerEdit} from "@/app/lib/definitions";
 
-type CustomerEdit = {
-  id: string;
-  name: string;
-  email: string;
-  image_url: string;
-};
+
 
 export default function Form({ customer }: { customer: CustomerEdit }) {
   const initialState: State = { message: null, errors: {} };
