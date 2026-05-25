@@ -184,6 +184,23 @@ export async function fetchCustomers() {
   }
 }
 
+export async function fetchCustomerById(id?: string) {
+  if (!id) {
+    return null;
+  }
+
+  try {
+    const [customer] = await sql<Customer[]>`
+      SELECT id, name, email, image_url FROM customers WHERE id = ${id}
+    `;
+
+    return customer ?? null;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch customer.');
+  }
+}
+
 export async function fetchFilteredCustomers(query: string) {
   try {
     const data = await sql<CustomersTableType[]>`
