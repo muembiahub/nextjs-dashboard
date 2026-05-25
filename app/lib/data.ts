@@ -5,6 +5,7 @@ import {
   InvoiceForm,
   InvoicesTable,
   LatestInvoiceRaw,
+  CustomerEdit,
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
