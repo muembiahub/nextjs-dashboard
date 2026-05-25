@@ -18,7 +18,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 
     const [customer, customers] = await Promise.all([
     fetchCustomerById(id),
-    fetchFilteredCustomers(),
+    fetchFilteredCustomers(""),
   ]);
 
   if (!customer) {
