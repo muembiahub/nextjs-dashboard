@@ -69,7 +69,7 @@ export default function Form({ customer }: { customer: CustomerEdit }) {
             id="imageUrl"
             name="imageUrl"
             type="text"
-            defaultValue={customer.image_url}
+            defaultValue={customer.image_url?? ""}
             placeholder="Optional image URL"
             className="block w-full rounded-md border border-gray-200 bg-white py-2 px-3 text-sm outline-2 placeholder:text-gray-500"
             aria-describedby="imageUrl-error"

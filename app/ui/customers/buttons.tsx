@@ -2,10 +2,10 @@
 
 import { PlusIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { useActionState } from "react";
-import { deleteCustomer, State } from '@/app/lib/actions';
+import { useRouter } from "next/navigation";
+import { deleteCustomer } from "@/app/lib/actions";
 
-
+/* ------------------ Create Customer ------------------ */
 export function CreateCustomer() {
   return (
     <Link
@@ -18,11 +18,12 @@ export function CreateCustomer() {
   );
 }
 
+/* ------------------ Update Customer ------------------ */
 export function UpdateCustomer({ id }: { id: string }) {
   return (
     <Link
       href={`/dashboard/customers/${id}/edit`}
-      className="inline-flex h-9 items-center rounded-lg border border-gray-200 bg-white px-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100"
+      className="inline-flex h-9 items-center rounded-lg bg-yellow-600 px-3 text-sm font-medium text-white transition-colors hover:bg-yellow-500"
     >
       <PencilSquareIcon className="h-4 w-4" />
       <span className="ml-2 hidden sm:inline">Edit</span>
@@ -30,13 +31,30 @@ export function UpdateCustomer({ id }: { id: string }) {
   );
 }
 
+/* ------------------ Delete Customer ------------------ */
+type DeleteCustomerResponse = {
+  success: boolean;
+  message: string;
+  error?: string;
+};
+
 export function DeleteCustomer({ id }: { id: string }) {
-  const initialState: State = { message: null, errors: {} };
-  const [, formAction] = useActionState(deleteCustomer, initialState);
+  const router = useRouter();
+
+  const deleteCustomerWithId = async () => {
+    const response: DeleteCustomerResponse = await deleteCustomer(id);
+
+    if (response.success) {
+      // ✅ Refresh UI so deleted customer disappears
+      router.refresh();
+    } else {
+      // Show error feedback
+      alert(`${response.message}\n${response.error ?? ""}`);
+    }
+  };
 
   return (
-    <form action={formAction} className="inline-flex" method="POST">
-      <input type="hidden" name="id" value={id} />
+    <form action={deleteCustomerWithId}>
       <button
         type="submit"
         className="inline-flex h-9 items-center rounded-lg bg-red-600 px-3 text-sm font-medium text-white transition-colors hover:bg-red-500"
